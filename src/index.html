@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MCDU App Fenix A320</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============ SCREEN 1 : CONNECTION ============ -->
+<section id="screen-connect" class="screen active">
+  <div class="brand">
+    <div class="brand-mark"><img src="assets/logo.png" alt="Fenix" /></div>
+    <h1>MCDU App <span>Fenix A320</span></h1>
+    <p class="sub">Système Web MCDU natif Fenix · port 8083</p>
+  </div>
+
+  <div class="card">
+    <div class="status-row">
+      <span id="status-dot" class="dot waiting"></span>
+      <span id="status-text">En attente de Microsoft Flight Simulator…</span>
+    </div>
+
+    <label class="field-label">Adresse du PC qui exécute MSFS</label>
+    <div class="ip-row">
+      <input id="host-input" type="text" value="localhost" spellcheck="false" />
+      <button id="use-localhost" class="ghost-btn" title="Cet ordinateur">localhost</button>
+    </div>
+    <div id="ip-hints" class="ip-hints"></div>
+
+    <div class="connect-actions">
+      <button id="connect-btn" class="primary-btn">Se connecter</button>
+      <label class="auto-toggle">
+        <input id="auto-poll" type="checkbox" checked />
+        Détection auto
+      </label>
+    </div>
+
+    <p class="hint">
+      L'app teste régulièrement <code id="probe-url">http://localhost:8083</code>.
+      Lancez le sim, chargez l'A320 Fenix, puis attendez le vert.
+    </p>
+  </div>
+</section>
+
+<!-- ============ SCREEN 2 : SIDE SELECT ============ -->
+<section id="screen-side" class="screen">
+  <div class="topbar">
+    <button class="back-btn" data-goto="screen-connect">‹ Retour</button>
+    <span class="topbar-title">Choix du MCDU</span>
+    <span id="side-host" class="topbar-host"></span>
+  </div>
+
+  <div class="side-wrap">
+    <h2>Quel MCDU veux-tu utiliser ?</h2>
+    <div class="side-grid">
+      <button class="side-card" data-side="left">
+        <div class="side-icon">◀</div>
+        <div class="side-name">MCDU Gauche</div>
+        <div class="side-desc">Commandant de bord (CPT)</div>
+      </button>
+      <button class="side-card both" data-side="both">
+        <div class="side-icon">❰❱</div>
+        <div class="side-name">Les deux MCDU</div>
+        <div class="side-desc">Gauche + Droite (CPT & F/O)</div>
+      </button>
+      <button class="side-card" data-side="right">
+        <div class="side-icon">▶</div>
+        <div class="side-name">MCDU Droite</div>
+        <div class="side-desc">Officier pilote (F/O)</div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 3 : CONNECTING GATE ============ -->
+<section id="screen-gate" class="screen">
+  <div class="topbar">
+    <div class="nav-menu">
+      <button class="back-btn" data-goto="screen-side">‹ Retour</button>
+      <select id="gate-view-select" class="view-select" title="Changer de MCDU">
+        <option value="1">MCDU CPT</option>
+        <option value="2">MCDU FO</option>
+        <option value="both">Both MCDU</option>
+      </select>
+    </div>
+    <span id="gate-host" class="topbar-host"></span>
+  </div>
+
+  <!-- SINGLE waiting -->
+  <div id="gate-single" class="gate-wrap">
+    <span id="gate-dot" class="dot fail gate-big-dot"></span>
+    <p id="gate-text" class="gate-text">En attente de connexion…</p>
+    <p class="gate-sub">Lancez MSFS et chargez l'A320 Fenix. L'affichage du MCDU démarrera automatiquement.</p>
+  </div>
+
+  <!-- DUAL waiting : same split + center separator as the dual MCDU view -->
+  <div id="gate-dual" class="gate-dual">
+    <div class="gate-half">
+      <span class="gate-side-tag">MCDU 1 · Gauche (CPT)</span>
+      <span id="gate-dot-l" class="dot fail gate-big-dot"></span>
+      <p id="gate-text-l" class="gate-text">En attente de connexion…</p>
+    </div>
+    <div class="gate-half">
+      <span class="gate-side-tag">MCDU 2 · Droite (FO)</span>
+      <span id="gate-dot-r" class="dot fail gate-big-dot"></span>
+      <p id="gate-text-r" class="gate-text">En attente de connexion…</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 4 : MCDU VIEW ============ -->
+<section id="screen-mcdu" class="screen">
+  <div class="topbar mcdu-bar">
+    <div class="nav-menu">
+      <button class="back-btn" data-goto="screen-side">‹ Retour</button>
+      <select id="view-select" class="view-select" title="Changer de MCDU">
+        <option value="1">MCDU CPT</option>
+        <option value="2">MCDU FO</option>
+        <option value="both">Both MCDU</option>
+      </select>
+    </div>
+    <button id="reload-btn" class="ghost-btn" title="Recharger">⟳</button>
+  </div>
+
+  <div id="mcdu-stage" class="mcdu-stage single">
+    <div class="pane" data-pane="1">
+      <div class="pane-tag">MCDU 1 · Gauche</div>
+      <webview id="wv1" class="wv" partition="persist:fenix" allowpopups></webview>
+    </div>
+    <div class="pane" data-pane="2">
+      <div class="pane-tag">MCDU 2 · Droite</div>
+      <webview id="wv2" class="wv" partition="persist:fenix" allowpopups></webview>
+    </div>
+  </div>
+</section>
+
+<script src="renderer.js"></script>
+</body>
+</html>
