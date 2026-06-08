@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,35 +11,35 @@
 <!-- ============ SCREEN 1 : CONNECTION ============ -->
 <section id="screen-connect" class="screen active">
   <div class="brand">
-    <div class="brand-mark"><img src="assets/logo.png" alt="Fenix" /></div>
+    <div class="brand-mark"><img src="assets/logo.png" alt="Logo" /></div>
     <h1>MCDU App <span>Fenix A320</span></h1>
-    <p class="sub">Système Web MCDU natif Fenix · port 8083</p>
+    <p class="sub">Native Fenix Web MCDU · port 8083</p>
   </div>
 
   <div class="card">
     <div class="status-row">
       <span id="status-dot" class="dot waiting"></span>
-      <span id="status-text">En attente de Microsoft Flight Simulator…</span>
+      <span id="status-text">Waiting for Microsoft Flight Simulator…</span>
     </div>
 
-    <label class="field-label">Adresse du PC qui exécute MSFS</label>
+    <label class="field-label">IP address of the PC running MSFS</label>
     <div class="ip-row">
       <input id="host-input" type="text" value="localhost" spellcheck="false" />
-      <button id="use-localhost" class="ghost-btn" title="Cet ordinateur">localhost</button>
+      <button id="use-localhost" class="ghost-btn" title="This computer">localhost</button>
     </div>
     <div id="ip-hints" class="ip-hints"></div>
 
     <div class="connect-actions">
-      <button id="connect-btn" class="primary-btn">Se connecter</button>
+      <button id="connect-btn" class="primary-btn">Connect</button>
       <label class="auto-toggle">
         <input id="auto-poll" type="checkbox" checked />
-        Détection auto
+        Auto-detect
       </label>
     </div>
 
     <p class="hint">
-      L'app teste régulièrement <code id="probe-url">http://localhost:8083</code>.
-      Lancez le sim, chargez l'A320 Fenix, puis attendez le vert.
+      The app regularly checks <code id="probe-url">http://localhost:8083</code>.
+      Start the sim, load the Fenix A320, then wait for green.
     </p>
   </div>
 </section>
@@ -47,28 +47,28 @@
 <!-- ============ SCREEN 2 : SIDE SELECT ============ -->
 <section id="screen-side" class="screen">
   <div class="topbar">
-    <button class="back-btn" data-goto="screen-connect">‹ Retour</button>
-    <span class="topbar-title">Choix du MCDU</span>
+    <button class="back-btn" data-goto="screen-connect">‹ Back</button>
+    <span class="topbar-title">Select MCDU</span>
     <span id="side-host" class="topbar-host"></span>
   </div>
 
   <div class="side-wrap">
-    <h2>Quel MCDU veux-tu utiliser ?</h2>
+    <h2>Which MCDU do you want to use?</h2>
     <div class="side-grid">
       <button class="side-card" data-side="left">
         <div class="side-icon">◀</div>
-        <div class="side-name">MCDU Gauche</div>
-        <div class="side-desc">Commandant de bord (CPT)</div>
+        <div class="side-name">Left MCDU</div>
+        <div class="side-desc">Captain (CPT)</div>
       </button>
       <button class="side-card both" data-side="both">
         <div class="side-icon">❰❱</div>
-        <div class="side-name">Les deux MCDU</div>
-        <div class="side-desc">Gauche + Droite (CPT & F/O)</div>
+        <div class="side-name">Both MCDU</div>
+        <div class="side-desc">Left + Right (CPT & F/O)</div>
       </button>
       <button class="side-card" data-side="right">
         <div class="side-icon">▶</div>
-        <div class="side-name">MCDU Droite</div>
-        <div class="side-desc">Officier pilote (F/O)</div>
+        <div class="side-name">Right MCDU</div>
+        <div class="side-desc">First Officer (F/O)</div>
       </button>
     </div>
   </div>
@@ -78,8 +78,8 @@
 <section id="screen-gate" class="screen">
   <div class="topbar">
     <div class="nav-menu">
-      <button class="back-btn" data-goto="screen-side">‹ Retour</button>
-      <select id="gate-view-select" class="view-select" title="Changer de MCDU">
+      <button class="back-btn" data-goto="screen-side">‹ Back</button>
+      <select id="gate-view-select" class="view-select" title="Switch MCDU">
         <option value="1">MCDU CPT</option>
         <option value="2">MCDU FO</option>
         <option value="both">Both MCDU</option>
@@ -91,21 +91,21 @@
   <!-- SINGLE waiting -->
   <div id="gate-single" class="gate-wrap">
     <span id="gate-dot" class="dot fail gate-big-dot"></span>
-    <p id="gate-text" class="gate-text">En attente de connexion…</p>
-    <p class="gate-sub">Lancez MSFS et chargez l'A320 Fenix. L'affichage du MCDU démarrera automatiquement.</p>
+    <p id="gate-text" class="gate-text">Waiting for connection…</p>
+    <p class="gate-sub">Start MSFS and load the Fenix A320. The MCDU will open automatically.</p>
   </div>
 
   <!-- DUAL waiting : same split + center separator as the dual MCDU view -->
   <div id="gate-dual" class="gate-dual">
     <div class="gate-half">
-      <span class="gate-side-tag">MCDU 1 · Gauche (CPT)</span>
+      <span class="gate-side-tag">MCDU 1 · Left (CPT)</span>
       <span id="gate-dot-l" class="dot fail gate-big-dot"></span>
-      <p id="gate-text-l" class="gate-text">En attente de connexion…</p>
+      <p id="gate-text-l" class="gate-text">Waiting for connection…</p>
     </div>
     <div class="gate-half">
-      <span class="gate-side-tag">MCDU 2 · Droite (FO)</span>
+      <span class="gate-side-tag">MCDU 2 · Right (FO)</span>
       <span id="gate-dot-r" class="dot fail gate-big-dot"></span>
-      <p id="gate-text-r" class="gate-text">En attente de connexion…</p>
+      <p id="gate-text-r" class="gate-text">Waiting for connection…</p>
     </div>
   </div>
 </section>
@@ -114,23 +114,23 @@
 <section id="screen-mcdu" class="screen">
   <div class="topbar mcdu-bar">
     <div class="nav-menu">
-      <button class="back-btn" data-goto="screen-side">‹ Retour</button>
-      <select id="view-select" class="view-select" title="Changer de MCDU">
+      <button class="back-btn" data-goto="screen-side">‹ Back</button>
+      <select id="view-select" class="view-select" title="Switch MCDU">
         <option value="1">MCDU CPT</option>
         <option value="2">MCDU FO</option>
         <option value="both">Both MCDU</option>
       </select>
     </div>
-    <button id="reload-btn" class="ghost-btn" title="Recharger">⟳</button>
+    <button id="reload-btn" class="ghost-btn" title="Reload">⟳</button>
   </div>
 
   <div id="mcdu-stage" class="mcdu-stage single">
     <div class="pane" data-pane="1">
-      <div class="pane-tag">MCDU 1 · Gauche</div>
+      <div class="pane-tag">MCDU 1 · Left</div>
       <webview id="wv1" class="wv" partition="persist:fenix" allowpopups></webview>
     </div>
     <div class="pane" data-pane="2">
-      <div class="pane-tag">MCDU 2 · Droite</div>
+      <div class="pane-tag">MCDU 2 · Right</div>
       <webview id="wv2" class="wv" partition="persist:fenix" allowpopups></webview>
     </div>
   </div>

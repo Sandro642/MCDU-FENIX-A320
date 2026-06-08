@@ -78,7 +78,7 @@ function refreshProbeLabel() {
 function setConnectLabel() {
   // Always set a correct label, even before the first probe resolves.
   connectBtn.disabled = false;
-  connectBtn.textContent = online ? 'Continuer \u203a' : 'Se connecter quand m\u00eame \u203a';
+  connectBtn.textContent = online ? 'Continue \u203a' : 'Connect anyway \u203a';
 }
 
 async function probe() {
@@ -87,11 +87,11 @@ async function probe() {
   const res = await checkHost(host);
   online = !!res.ok;
   if (res.ok) {
-    setStatus('ok', `Connect\u00e9 \u00e0 MSFS — Fenix d\u00e9tect\u00e9 sur ${host}:${PORT}`);
+    setStatus('ok', `Connected to MSFS — Fenix detected on ${host}:${PORT}`);
   } else if (res.reason === 'timeout') {
-    setStatus('waiting', 'En attente de Microsoft Flight Simulator\u2026');
+    setStatus('waiting', 'Waiting for Microsoft Flight Simulator\u2026');
   } else {
-    setStatus('waiting', 'En attente\u2026 (serveur Fenix injoignable)');
+    setStatus('waiting', 'Waiting\u2026 (Fenix server unreachable)');
   }
   setConnectLabel();
 }
@@ -142,7 +142,7 @@ function proceedToSide() {
 fenixApi.localIps().then(ips => {
   const box = $('ip-hints');
   if (!box || !ips || !ips.length) return;
-  box.innerHTML = '<span style="color:var(--muted);font-size:12px;">Adresses locales : </span>';
+  box.innerHTML = '<span style="color:var(--muted);font-size:12px;">Local addresses: </span>';
   ips.forEach(ip => {
     const b = document.createElement('button');
     b.textContent = ip;
@@ -167,7 +167,7 @@ document.querySelectorAll('.side-card, .link-btn[data-side]').forEach(el => {
 // CONNECTING GATE (screen between side-select and MCDU)
 // ---------------------------------------------------------------------------
 // When a side is chosen we go to a gate screen:
-//   - if Fenix is OFF  -> red blinking dot + "En attente de connexion...", retry
+//   - if Fenix is OFF  -> red blinking dot + "Waiting for connection...", retry
 //   - once reachable   -> green dot + "Connecte" for 2s, then show the MCDU
 // ---------------------------------------------------------------------------
 const gateScreen = $('screen-gate');
@@ -214,7 +214,7 @@ gateViewSelect.addEventListener('change', () => {
 });
 
 function setGateWaiting() {
-  const txt = 'En attente de connexion\u2026';
+  const txt = 'Waiting for connection\u2026';
   gateDot.className = 'dot fail gate-big-dot';
   gateText.textContent = txt;
   gateDotL.className = 'dot fail gate-big-dot';
@@ -236,7 +236,7 @@ async function runGateProbe() {
 }
 
 function onGateConnected() {
-  const txt = 'Connect\u00e9';
+  const txt = 'Connected';
   gateDot.className = 'dot ok gate-big-dot';
   gateText.textContent = txt;
   gateDotL.className = 'dot ok gate-big-dot';
