@@ -134,7 +134,6 @@ connectBtn.addEventListener('click', () => {
 
 function proceedToSide() {
   stopPolling();
-  $('side-host').textContent = `${state.host}:${PORT}`;
   show('screen-side');
 }
 
@@ -173,7 +172,6 @@ document.querySelectorAll('.side-card, .link-btn[data-side]').forEach(el => {
 const gateScreen = $('screen-gate');
 const gateDot = $('gate-dot');
 const gateText = $('gate-text');
-const gateHost = $('gate-host');
 const gateDotL = $('gate-dot-l');
 const gateTextL = $('gate-text-l');
 const gateDotR = $('gate-dot-r');
@@ -197,7 +195,6 @@ function syncGateSelect(view) {
 function gateThenEnter(initialView) {
   pendingView = initialView;
   gateAbort = false;
-  gateHost.textContent = `${state.host}:${PORT}`;
   syncGateSelect(initialView);
   // Dual waiting layout (with center separator) when both MCDU were chosen.
   gateScreen.classList.toggle('mode-dual', initialView === 'both');
